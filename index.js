@@ -71,11 +71,13 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
       image: image,
     })
     .then(function () {
+     console.log("1");
       webpush.setVapidDetails(
-        "mailto:business@academind.com",
+        "mailto:abhishekgoyal274@gmail.com",
         "BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE",
         "AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s"
       );
+      console.log("2");
       return firebase.database().ref("subscriptions").once("value");
     })
     .then(function (subscriptions) {
