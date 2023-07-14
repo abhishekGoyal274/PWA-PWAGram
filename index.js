@@ -85,8 +85,8 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
     })
     .then(function () {
      console.log("1");
-      cont  pubkey = urlBase64ToUint8Array("BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE");
-      cont  privkey = urlBase64ToUint8Array("AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s");
+      const  pubkey = urlBase64ToUint8Array("BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE");
+      const  privkey = urlBase64ToUint8Array("AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s");
       webpush.setVapidDetails(
         "mailto:abhishekgoyal274@gmail.com",
         pubkey,
