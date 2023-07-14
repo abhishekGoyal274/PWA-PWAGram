@@ -6,50 +6,9 @@ const firebase = require("firebase-admin");
 const webpush = require("web-push");
 const multer = require("multer");
 
-// Firebase API
-// const express = require("express");
-// const cors = require("cors");
-// const fs = require("firebase-admin");
-// const bodyParser = require("body-parser");
-
-// const app = express();
-// app.use(cors());
-// app.use(bodyParser.json());
-
-// const serviceAccount = require("../PWA- Frontend/functions/pwa-course-79727.json");
-// fs.initializeApp({
-//   credential: fs.credential.cert(serviceAccount),
-//   databaseURL:
-//     "https://pwa-course-79727-default-rtdb.asia-southeast1.firebasedatabase.app",
-// });
-
-// const db = fs.firestore();
-// app.post("/storePostData", async (req, res) => {
-//   try {
-//     console.log(req.body);
-//     const id = req.body.id;
-//     const userJson = {
-//       id: req.body.id,
-//       image: req.body.image,
-//       title: req.body.title,
-//       location: req.body.location,
-//     };
-//     const usersDb = db.collection("posts");
-//     const response = await usersDb.doc(id).set(userJson);
-//     res.send(response);
-//   } catch (error) {
-//     res.send(error);
-//   }
-// });
-
-// const port = 5000 || process.env.PORT;
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`);
-// });
-
 // Database API
 
-const serviceAccount = require("./pwa-course-79727.json");
+const serviceAccount = require("/etc/secrets/pwa-course-79727.json");
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
   databaseURL:
@@ -93,9 +52,9 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
   let image;
   try {
     image =
-      "http://" + request.headers.host + "/uploads/" + request.file.filename;
+      "https://" + request.headers.host + "/uploads/" + request.file.filename;
   } catch (err) {
-    image = "http://" + request.headers.host + "/uploads/default.jpg";
+    image = "https://" + request.headers.host + "/uploads/default.jpg";
   }
   console.log(request.body);
   firebase
