@@ -7,20 +7,6 @@ const webpush = require("web-push");
 const multer = require("multer");
 
 // Database API
-
-function urlBase64ToUint8Array(base64String) {
-  var padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-  var base64 = (base64String + padding).replace(/\-/g, "+").replace(/_/g, "/");
-
-  var rawData = window.atob(base64);
-  var outputArray = new Uint8Array(rawData.length);
-
-  for (var i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-}
-
 const serviceAccount = require("/etc/secrets/pwa-course-79727.json");
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
@@ -85,12 +71,10 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
     })
     .then(function () {
      console.log("1");
-      const  pubkey = urlBase64ToUint8Array("BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE");
-      const  privkey = urlBase64ToUint8Array("AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s");
       webpush.setVapidDetails(
         "mailto:abhishekgoyal274@gmail.com",
-        pubkey,
-        privkey
+        'BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE',
+        'AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s'
       );
       console.log("2");
       return firebase.database().ref("subscriptions").once("value");
