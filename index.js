@@ -108,8 +108,8 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
             response.status(500).json({ error: err });
           });
       });
+      console.log("[Completely Send]");
       response.status(201).json({
-        console.log("[Completely Send]");
         message: "Data stored",
         id: request.body.id,
       });
