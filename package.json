@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "web-push": "web-push",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
