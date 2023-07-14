@@ -6,6 +6,15 @@ const firebase = require("firebase-admin");
 const webpush = require("web-push");
 const multer = require("multer");
 
+function base64ToArrayBuffer(base64) {
+    var binaryString = atob(base64);
+    var bytes = new Uint8Array(binaryString.length);
+    for (var i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+}
+
 // Database API
 const serviceAccount = require("/etc/secrets/pwa-course-79727.json");
 firebase.initializeApp({
@@ -71,10 +80,12 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
     })
     .then(function () {
      console.log("1");
+      const pubkey = "BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE";
+      const privkey = "AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s";
       webpush.setVapidDetails(
         "mailto:abhishekgoyal274@gmail.com",
-        'BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE',
-        'AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s'
+        base64ToArrayBuffer(pubkey),
+        base64ToArrayBuffer(privkey)
       );
       console.log("2");
       return firebase.database().ref("subscriptions").once("value");
