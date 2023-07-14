@@ -74,6 +74,7 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
       image: image,
     })
     .then(function () {
+      console.log("[setVapidDetails]");
       webpush.setVapidDetails(
         "mailto:business@academind.com",
         "BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE",
