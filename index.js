@@ -82,6 +82,7 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
       return firebase.database().ref("subscriptions").once("value");
     })
     .then(function (subscriptions) {
+      console.log("[Subs: ]", subscriptions);
       subscriptions.forEach(function (sub) {
         var pushConfig = {
           endpoint: sub.val().endpoint,
@@ -90,7 +91,6 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
             p256dh: sub.val().keys.p256dh,
           },
         };
-
         webpush
           .sendNotification(
             pushConfig,
@@ -105,14 +105,17 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
           })
           .catch(function (err) {
             console.log("[Error in Web Push]");
+            response.status(500).json({ error: err });
           });
       });
       response.status(201).json({
+        console.log("[Completely Send]");
         message: "Data stored",
         id: request.body.id,
       });
     })
     .catch(function (err) {
+      console.log("[Error in Complete]");
       response.status(500).json({ error: err });
     });
 });
