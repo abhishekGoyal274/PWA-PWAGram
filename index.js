@@ -112,6 +112,7 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
       });
     })
     .catch(function (err) {
+      console.log(err);
       response.status(500).json({ error: err });
     });
 });
