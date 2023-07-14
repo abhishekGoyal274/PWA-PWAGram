@@ -55,9 +55,9 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
   let image;
   try {
     image =
-      "http://" + request.headers.host + "/uploads/" + request.file.filename;
+      "https://" + request.headers.host + "/uploads/" + request.file.filename;
   } catch (err) {
-    image = "http://" + request.headers.host + "/uploads/default.png";
+    image = "https://" + request.headers.host + "/uploads/default.png";
   }
   console.log(request.body);
   firebase
