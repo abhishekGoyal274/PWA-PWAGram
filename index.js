@@ -57,7 +57,7 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
     image =
       "https://" + request.headers.host + "/uploads/" + request.file.filename;
   } catch (err) {
-    image = "https://" + request.headers.host + "/uploads/default.png";
+    image = "https://" + request.headers.host + "/uploads/default.jpg";
   }
   console.log(request.body);
   firebase
@@ -74,17 +74,14 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
       image: image,
     })
     .then(function () {
-      console.log("[setVapidDetails1]");
       webpush.setVapidDetails(
         "mailto:business@academind.com",
         "BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE",
         "AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s"
       );
-      console.log("[setVapidDetails2]");
       return firebase.database().ref("subscriptions").once("value");
     })
     .then(function (subscriptions) {
-      console.log("[Subs: ]", subscriptions);
       subscriptions.forEach(function (sub) {
         var pushConfig = {
           endpoint: sub.val().endpoint,
@@ -93,6 +90,7 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
             p256dh: sub.val().keys.p256dh,
           },
         };
+
         webpush
           .sendNotification(
             pushConfig,
@@ -107,17 +105,14 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
           })
           .catch(function (err) {
             console.log("[Error in Web Push]");
-            response.status(500).json({ error: err });
           });
       });
-      console.log("[Completely Send]");
       response.status(201).json({
         message: "Data stored",
         id: request.body.id,
       });
     })
     .catch(function (err) {
-      console.log("[Error in Complete]");
       response.status(500).json({ error: err });
     });
 });
