@@ -6,15 +6,6 @@ const firebase = require("firebase-admin");
 const webpush = require("web-push");
 const multer = require("multer");
 
-function base64ToArrayBuffer(base64) {
-    var binaryString = atob(base64);
-    var bytes = new Uint8Array(binaryString.length);
-    for (var i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-    }
-    return bytes.buffer;
-}
-
 // Database API
 const serviceAccount = require("/etc/secrets/pwa-course-79727.json");
 firebase.initializeApp({
@@ -84,8 +75,8 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
       const privkey = "AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s";
       webpush.setVapidDetails(
         "mailto:abhishekgoyal274@gmail.com",
-        base64ToArrayBuffer(pubkey),
-        base64ToArrayBuffer(privkey)
+        Buffer.from(pubkey, 'base64').toString('utf8'),
+        Buffer.from(privkey, 'base64').toString('utf8')
       );
       console.log("2");
       return firebase.database().ref("subscriptions").once("value");
