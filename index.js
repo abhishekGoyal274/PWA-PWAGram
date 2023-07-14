@@ -7,7 +7,7 @@ const webpush = require("web-push");
 const multer = require("multer");
 
 // Database API
-const serviceAccount = require("/pwa-course-79727.json");
+const serviceAccount = require("/etc/secrets/pwa-course-79727.json");
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
   databaseURL:
