@@ -71,13 +71,7 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
     })
     .then(function () {
      console.log("1");
-      const pubkey = "BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE";
-      const privkey = "AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s";
-      webpush.setVapidDetails(
-        "mailto:abhishekgoyal274@gmail.com",
-        Buffer.from(pubkey, 'base64').toString('utf8'),
-        Buffer.from(privkey, 'base64').toString('utf8')
-      );
+      
       console.log("2");
       return firebase.database().ref("subscriptions").once("value");
     })
@@ -90,7 +84,15 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
             p256dh: sub.val().keys.p256dh,
           },
         };
-
+        const pubkey = "BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE";
+        const privkey = "AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s";
+        const options = {
+          vapidDetails: {
+            subject: 'abhishekgoyal274@gmail.com',
+            publicKey: pubkey,
+            privateKey: privkey
+          },
+        }
         webpush
           .sendNotification(
             pushConfig,
@@ -98,7 +100,8 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
               title: "New Post",
               content: "New Post added!",
               openUrl: "/",
-            })
+            }),
+            options
           )
           .then((res) => {
             console.log("[Success]");
