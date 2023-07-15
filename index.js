@@ -81,13 +81,14 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
             p256dh: sub.val().keys.p256dh,
           },
         };
-        const pubkey = "BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE";
-        const privkey = "AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s";
+        // const pubkey = "BKapuZ3XLgt9UZhuEkodCrtnfBo9Smo-w1YXCIH8YidjHOFAU6XHpEnXefbuYslZY9vtlEnOAmU7Mc-kWh4gfmE";
+        // const privkey = "AyVHwGh16Kfxrh5AU69E81nVWIKcUwR6a9f1X4zXT_s";
         const options = {
+          TTL: 24 * 60 * 60,
           vapidDetails: {
             subject: 'https://pwa-course-79727.web.app',
-            publicKey: pubkey,
-            privateKey: privkey
+            publicKey: process.env.pubkey,
+            privateKey: process.env.privkey
           },
         }
         webpush
