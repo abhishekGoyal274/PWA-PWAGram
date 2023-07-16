@@ -73,6 +73,7 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
       return firebase.database().ref("subscriptions").once("value");
     })
     .then(function (subscriptions) {
+      console.log(subscriptions);
       subscriptions.forEach(function (sub) {
         var pushConfig = {
           endpoint: sub.val().endpoint,
@@ -108,6 +109,7 @@ app.post("/storePostData", upload.single("file"), (request, response) => {
             console.log("[Error in Web Push]",err);
           });
       });
+      console.log("[Add Successfull]");
       response.status(201).json({
         message: "Data stored",
         id: request.body.id,
