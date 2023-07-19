@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
+    "web-push": "web-push",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -17,6 +18,7 @@
     "firebase-admin": "^11.9.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1",
+    "uuid-v4": "^0.1.0",
     "web-push": "^3.6.3"
   }
 }
